@@ -34,7 +34,7 @@ The repository is structured as follows:
 │   ├── solution2.txt
 │   └── ...
 └── README.md
-'''
+```
 
 - **Easy/**: Contains solutions to easy SQL questions.
 - **Medium/**: Contains solutions to medium SQL questions.
