@@ -20,7 +20,7 @@ This repository aims to provide comprehensive solutions to all SQL questions fro
 
 The repository is structured as follows:
 
-```
+```Structure
 ├── Easy
 │   ├── solution1.txt
 │   ├── solution2.txt
@@ -34,7 +34,7 @@ The repository is structured as follows:
 │   ├── solution2.txt
 │   └── ...
 └── README.md
-```
+'''
 
 - **Easy/**: Contains solutions to easy SQL questions.
 - **Medium/**: Contains solutions to medium SQL questions.
