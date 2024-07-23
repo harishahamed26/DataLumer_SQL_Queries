@@ -1,0 +1,18 @@
+
+SELECT 
+  EXTRACT(MONTH FROM cm.event_date) AS month,
+  COUNT(DISTINCT cm.user_id) as monthly_active_users 
+FROM user_actions cm
+WHERE
+  EXISTS (
+  SELECT pm.user_id FROM user_actions pm
+  WHERE
+    EXTRACT(MONTH FROM pm.event_date) = 06 AND
+    EXTRACT(YEAR FROM pm.event_date) = 2022 AND
+    cm.user_id = pm.user_id
+  ) 
+  AND
+  EXTRACT(MONTH FROM cm.event_date) = 07 AND
+  EXTRACT(YEAR FROM cm.event_date) = 2022
+GROUP BY EXTRACT(MONTH FROM cm.event_date)
+;

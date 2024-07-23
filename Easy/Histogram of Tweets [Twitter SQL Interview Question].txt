@@ -1,0 +1,16 @@
+WITH tweety as (
+  SELECT 
+     user_id AS users_num,
+     COUNT(tweet_id) AS tweet_bucket
+  FROM tweets
+  WHERE
+    EXTRACT(YEAR from tweet_date)  = ' 2022' 
+  GROUP BY user_id
+)
+
+SELECT 
+  tweet_bucket,
+  count(users_num) AS users_num 
+FROM tweety
+GROUP BY tweet_bucket
+;

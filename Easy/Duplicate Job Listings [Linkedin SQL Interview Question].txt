@@ -1,0 +1,11 @@
+WITH duplicate_listing AS(
+SELECT 
+  ROW_NUMBER() 
+  OVER(PARTITION BY compANY_ID, 
+  title, description) as duplicate_count
+FROM job_listings
+)
+
+SELECT count(duplicate_count) AS duplicate_companies 
+FROM duplicate_listing
+WHERE duplicate_count > 1

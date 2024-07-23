@@ -1,0 +1,15 @@
+WITH top_traded_cities AS(
+
+SELECT 
+  DISTINCT s.city, COUNT(t.user_id) as total_orders
+FROM trades t JOIN users s 
+ON t.user_id = s.user_id
+WHERE t.status = 'Completed'
+GROUP BY s.city
+ORDER BY total_orders DESC
+)
+
+SELECT * from top_traded_cities
+LIMIT 3;
+
+

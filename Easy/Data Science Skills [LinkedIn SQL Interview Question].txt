@@ -1,0 +1,16 @@
+With skill_table as(
+SELECT 
+  candidate_id, skill
+FROM candidates
+WHERE skill IN ('Python','Tableau', 'PostgreSQL')
+)
+
+SELECT 
+  DISTINCT c.candidate_id 
+FROM candidates c 
+INNER JOIN skill_table s 
+ON  c.candidate_id = s.candidate_id and 
+    c.skill = s.skill
+GROUP BY c.candidate_id
+HAVING  COUNT(c.skill) = 3
+--WHERE c.skill IN ('Python','Tableau', 'PostgreSQL');
