@@ -1,0 +1,29 @@
+WITH count_clicks AS(
+  SELECT
+    app_id,
+    COUNT(event_type) as clicks
+  FROM events
+  WHERE 
+    EXTRACT(YEAR FROM timestamp) = 2022 AND
+    event_type = 'click'
+  GROUP BY app_id
+),
+
+count_impression AS (
+
+  SELECT
+    app_id,
+    COUNT(event_type) as impression
+  FROM events
+  WHERE 
+    EXTRACT(YEAR FROM timestamp) = 2022 AND
+    event_type = 'impression'
+  GROUP BY app_id
+)
+
+SELECT 
+  DISTINCT cc.app_id,
+  ROUND((100.00 * clicks/impression),2) AS ctr
+
+FROM count_clicks cc JOIN count_impression ci
+ON cc.app_id = ci.app_id;
