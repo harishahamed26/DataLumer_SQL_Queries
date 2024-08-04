@@ -1,4 +1,3 @@
-```markdown
 # DataLemur SQL Solutions
 
 Welcome to the repository containing solutions for all DataLemur SQL questions categorized by difficulty: Easy, Medium, and Hard.
