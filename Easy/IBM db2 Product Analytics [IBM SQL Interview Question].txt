@@ -1,0 +1,74 @@
+)
+
+SELECT 
+  COUNT(e.employee_id WHERE 
+  EXTRACT(MONTH FROM q.query_starttime) IN (7,8,9) AND
+  EXTRACT(YEAR FROM q.query_starttime) = 2023) AS  employee_count
+FROM 
+  queries q 
+JOIN
+  employees e 
+ON
+  q.employee_id = e.employee_id
+WHERE
+  EXTRACT(MONTH FROM q.query_starttime) IN (7,8,9) AND
+  EXTRACT(YEAR FROM q.query_starttime) = 2023
+GROUP BY e.employee_id, q.query_starttime
+  
+LIMIT 10;
+
+
+SELECT 
+  0 AS unique_queries,
+  COUNT(q.employee_id) FROM queries q 
+JOIN  employees e
+ON  e.employee_id = q.employee_id
+WHERE
+  EXTRACT(MONTH FROM q.query_starttime) NOT IN (7,8,9) AND
+  EXTRACT(YEAR FROM q.query_starttime) = 2023
+
+SELECT 
+  q.employee_id AS unique_queries,
+  COUNT(q.query_id) FROM queries q 
+JOIN  employees e
+ON  e.employee_id = q.employee_id
+WHERE
+  EXTRACT(MONTH FROM q.query_starttime)  IN (7,8,9) AND
+  EXTRACT(YEAR FROM q.query_starttime) = 2023
+GROUP BY q.employee_id
+
+
+
+WITH query_count AS(
+
+SELECT 
+  q.employee_id AS employee,
+  COUNT(q.query_id) AS queries
+FROM queries q 
+JOIN  employees e
+ON  e.employee_id = q.employee_id
+WHERE
+  EXTRACT(MONTH FROM q.query_starttime) NOT IN (7,8,9) AND
+  EXTRACT(YEAR FROM q.query_starttime) = 2023
+GROUP BY q.employee_id
+
+UNION
+
+SELECT 
+  q.employee_id AS employee,
+  COUNT(q.query_id) AS queries
+FROM queries q 
+JOIN  employees e
+ON  e.employee_id = q.employee_id
+WHERE
+  EXTRACT(MONTH FROM q.query_starttime)  IN (7,8,9) AND
+  EXTRACT(YEAR FROM q.query_starttime) = 2023
+GROUP BY q.employee_id
+
+ORDER BY employee
+)
+SELECT 
+  DISTINCT queries AS employee_count,
+  COUNT(employee) OVER( PARTITION BY queries) AS unique_queries
+  
+FROM query_count
